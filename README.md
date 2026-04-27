@@ -102,13 +102,41 @@ CREATE TABLE employees (
 );
 ```
 
+### 4. Import Sample Data
+
+From the project root, run:
+
+```bash
+mysql -u root -p employee_db < employee_management_system.sql
+```
+
+This imports the `employees` table schema and sample rows from:
+`employee_management_system.sql`.
+
 ---
 
 ## ▶️ How to Run
 
 ### Step 1: Start MySQL
 
-### Step 2: Run RMI Server
+Make sure MySQL is running and `employee_db` exists.
+
+### Step 2: Configure DB Credentials
+
+Create/update `config.properties` with your DB values:
+
+```properties
+db.url=jdbc:mysql://localhost:3306/employee_db
+db.user=root
+db.password=root
+```
+
+`config.properties` can be loaded from:
+- classpath resources
+- project root (`./config.properties`)
+- `src/config.properties`
+
+### Step 3: Run RMI Server
 
 Run:
 
@@ -122,7 +150,7 @@ Expected output:
 RMI Server Started...
 ```
 
-### Step 3: Run Client
+### Step 4: Run Client
 
 Run:
 
@@ -138,29 +166,21 @@ MainApp.java
 * The `Employee` class implements `Serializable` (required for RMI).
 * MySQL Connector/J must be added to project libraries.
 * JavaFX must be configured properly in IntelliJ.
+* If you change DB connection code or properties, restart `RMIServer` before opening the client.
 
 ---
 
-## 🧠 Learning Outcomes
+## 🛠️ Troubleshooting
 
-This project demonstrates:
+### UI opens but table is empty
 
-* Distributed systems using RMI
-* Database connectivity using JDBC
-* GUI development with JavaFX
-* Client-server architecture design
+Check the following:
 
----
-
-## 📈 Future Improvements
-
-* 🔐 Login/Authentication system
-* 🔍 Search and filtering
-* 📄 Export data to PDF/Excel
-* 🎨 Improved UI/UX design
-
----
-
+1. `RMIServer` is running before starting `MainApp`.
+2. `employee_db.employees` has rows.
+3. `config.properties` values are correct (URL, user, password).
+4. MySQL Connector/J is added to project libraries.
+5. After any server-side code change, stop and start `RMIServer` again.
 
 ## 📜 License
 

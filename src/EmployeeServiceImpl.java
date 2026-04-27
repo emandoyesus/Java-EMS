@@ -13,7 +13,7 @@ public class EmployeeServiceImpl extends UnicastRemoteObject implements Employee
     @Override
     public String addEmployee(String name, String position, double salary) throws RemoteException {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "INSERT INTO employees(name, position, salary) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -35,7 +35,7 @@ public class EmployeeServiceImpl extends UnicastRemoteObject implements Employee
     @Override
     public String updateEmployee(int id, String name, String position, double salary) throws RemoteException {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "UPDATE employees SET name=?, position=?, salary=? WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -58,7 +58,7 @@ public class EmployeeServiceImpl extends UnicastRemoteObject implements Employee
     @Override
     public String deleteEmployee(int id) throws RemoteException {
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "DELETE FROM employees WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -80,7 +80,7 @@ public class EmployeeServiceImpl extends UnicastRemoteObject implements Employee
         List<Employee> list = new ArrayList<>();
 
         try {
-            Connection conn = DBConnection.connect();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "SELECT * FROM employees";
             Statement stmt = conn.createStatement();
